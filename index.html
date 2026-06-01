@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crèche le P'tit Pas - Gestion & Communication</title>
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement de Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Personnalisation de la barre de défilement */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="h-full bg-gray-200 flex flex-col font-sans overflow-hidden">
+
+    <!-- Barre d'outils de simulation (Mode Web / Mobile) -->
+    <div class="bg-gray-900 text-white p-3 flex justify-center items-center gap-4 shadow-md z-50 shrink-0">
+        <span class="text-sm font-semibold text-gray-400 hidden sm:block">Aperçu :</span>
+        <button id="btn-web" class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-pink-500 text-white shadow-lg">
+            <i data-lucide="monitor" class="w-4 h-4"></i> Mode Web
+        </button>
+        <button id="btn-mobile" class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">
+            <i data-lucide="smartphone" class="w-4 h-4"></i> Mode Mobile
+        </button>
+    </div>
+
+    <!-- Conteneur principal de l'application -->
+    <div class="flex-1 flex justify-center items-center p-0 md:p-4 overflow-hidden">
+        
+        <!-- Le "téléphone" virtuel ou l'écran web -->
+        <div id="app-viewport" class="bg-pink-50 text-black w-full flex flex-col transition-all duration-500 relative shadow-2xl overflow-hidden max-w-7xl h-full rounded-none md:rounded-2xl border border-pink-200">
+            
+            <!-- ========================================== -->
+            <!-- 1. PAGE D'ACCUEIL PUBLIQUE (LANDING)       -->
+            <!-- ========================================== -->
+            <div id="landing-page" class="h-full overflow-y-auto bg-white flex flex-col scroll-smooth">
+                
+                <!-- Header de la page d'accueil -->
+                <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-pink-100 p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="baby" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-extrabold text-lg text-black">Crèche le P'tit Pas</span>
+                    </div>
+                    
+                    <nav class="flex items-center gap-4">
+                        <a href="#contact-footer" class="text-sm font-semibold text-gray-600 hover:text-pink-600 hidden sm:inline">Contact</a>
+                        <button onclick="goToLogin()" class="text-sm font-bold text-pink-600 hover:text-pink-800">Connexion</button>
+                        <button onclick="goToLogin()" class="text-sm font-bold bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600 transition-colors shadow-sm">Créer un compte</button>
+                    </nav>
+                </header>
+
+                <!-- Hero Section -->
+                <section class="px-6 py-12 md:py-20 bg-pink-50 text-center relative overflow-hidden shrink-0">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40 -mt-20 -mr-20"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-pink-300 rounded-full blur-3xl opacity-30 -mb-10 -ml-10"></div>
+                    
+                    <div class="relative z-10 max-w-3xl mx-auto">
+                        <h1 class="text-3xl md:text-5xl font-extrabold text-black mb-4 leading-tight">
+                            Bienvenue sur <span class="text-pink-500">Crèche le P'tit Pas</span>
+                        </h1>
+                        <p class="text-pink-600 font-bold italic text-lg md:text-xl mb-6">
+                            « Parce que chaque sourire mérite d'être partagé. »
+                        </p>
+                        <p class="text-gray-700 text-sm md:text-lg mb-8 leading-relaxed">
+                            La solution numérique qui rapproche les parents, les éducateurs et les enfants pour un suivi quotidien simple, sécurisé et efficace.
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <button onclick="goToLogin()" class="bg-pink-500 text-white font-bold px-6 py-3 rounded-full hover:bg-pink-600 transition-colors shadow-lg flex items-center justify-center gap-2">
+                                <i data-lucide="smartphone" class="w-5 h-5"></i> Découvrir l'application
+                            </button>
+                            <button onclick="goToLogin()" class="bg-white text-pink-600 border-2 border-pink-500 font-bold px-6 py-3 rounded-full hover:bg-pink-50 transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="baby" class="w-5 h-5"></i> Inscrire mon enfant
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Zone d'illustration principale -->
+                <section class="px-6 -mt-8 relative z-20 flex justify-center shrink-0">
+                    <div class="bg-white p-4 rounded-3xl shadow-xl border border-pink-100 flex items-center justify-center w-full max-w-4xl h-44 md:h-72 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-pink-100 to-pink-50 opacity-50"></div>
+                        <i data-lucide="baby" class="w-20 h-20 text-pink-400 group-hover:scale-110 transition-transform duration-500 relative z-10"></i>
+                    </div>
+                </section>
+
+                <!-- Services Section -->
+                <section class="px-6 py-12 max-w-6xl mx-auto shrink-0">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-black">Nos Services</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Service 1 -->
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="baby" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-black mb-2">Suivi Quotidien</h3>
+                            <p class="text-xs text-gray-600">Consultez les repas, siestes, activités et informations de votre enfant en temps réel.</p>
+                        </div>
+                        <!-- Service 2 -->
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="message-square" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-black mb-2">Communication Instantanée</h3>
+                            <p class="text-xs text-gray-600">Échangez directement avec les éducateurs via une messagerie sécurisée.</p>
+                        </div>
+                        <!-- Service 3 -->
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="image" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-black mb-2">Galerie Photos</h3>
+                            <p class="text-xs text-gray-600">Recevez des photos et des souvenirs des moments importants de la journée.</p>
+                        </div>
+                        <!-- Service 4 -->
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="credit-card" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-black mb-2">Paiement Simplifié</h3>
+                            <p class="text-xs text-gray-600">Réglez les frais de garde directement et en toute sécurité depuis l'application.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Avantages & Témoignages -->
+                <section class="bg-pink-50 py-12 px-6 shrink-0">
+                    <div class="max-w-4xl mx-auto">
+                        <h2 class="text-2xl font-bold text-center mb-6 text-black">Pourquoi choisir notre application ?</h2>
+                        <div class="bg-white p-6 rounded-3xl border border-pink-100 space-y-3">
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Suivi en temps réel de l'évolution de l'enfant</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Sécurité renforcée et protection des données</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Communication transparente entre crèche et famille</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Gestion administrative simplifiée pour la direction</span></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-12 px-6 max-w-4xl mx-auto shrink-0">
+                    <h2 class="text-2xl font-bold text-center mb-8 text-black">Témoignages</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100">
+                            <p class="italic text-xs text-gray-700 mb-3">"Grâce à l'application, je peux suivre les activités de ma fille même lorsque je suis au travail. C'est magique !"</p>
+                            <p class="font-bold text-xs text-black">— Parent utilisateur</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100">
+                            <p class="italic text-xs text-gray-700 mb-3">"L'application facilite notre communication avec les familles. Moins de papiers et plus de partage."</p>
+                            <p class="font-bold text-xs text-black">— Éducatrice</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chiffres Clés -->
+                <section class="bg-pink-500 text-white py-8 px-6 shrink-0">
+                    <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+                        <div><i data-lucide="baby" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">+500</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Enfants</div></div>
+                        <div><i data-lucide="users" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">+300</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Familles</div></div>
+                        <div><i data-lucide="home" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">5</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Crèches</div></div>
+                        <div><i data-lucide="star" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">98%</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Satisfaction</div></div>
+                    </div>
+                </section>
+
+                <!-- Appel à l'action -->
+                <section class="py-12 px-6 text-center max-w-xl mx-auto shrink-0">
+                    <h2 class="text-xl md:text-2xl font-bold mb-3 text-black">Prêt à simplifier votre quotidien ?</h2>
+                    <p class="text-xs text-gray-600 mb-6">Rejoignez-nous dès maintenant pour faire un pas vers la modernité.</p>
+                    <div class="flex justify-center gap-3">
+                        <button onclick="goToLogin()" class="bg-green-500 text-white font-bold px-5 py-2.5 rounded-full hover:bg-green-600 transition-colors shadow-sm text-sm">Créer un compte</button>
+                        <button class="bg-blue-500 text-white font-bold px-5 py-2.5 rounded-full hover:bg-blue-600 transition-colors shadow-sm text-sm">Demander une démo</button>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer id="contact-footer" class="bg-gray-900 text-gray-400 py-10 px-6 mt-auto border-t border-gray-800 shrink-0 text-center sm:text-left">
+                    <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 pb-6 border-b border-gray-800 text-sm">
+                        <div>
+                            <div class="flex items-center gap-2 justify-center sm:justify-start text-white font-bold mb-2">
+                                <i data-lucide="baby" class="text-pink-500 w-5 h-5"></i>
+                                <span>Crèche le P'tit Pas</span>
+                            </div>
+                            <p class="text-xs text-pink-400 italic font-semibold">« Grandir ensemble, en toute confiance. » 🌱👶💙</p>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">Informations</h4>
+                            <ul class="space-y-1 text-xs">
+                                <li><a href="#" class="hover:text-pink-400">À propos</a></li>
+                                <li><a href="#" class="hover:text-pink-400">Politique de confidentialité</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">Contact</h4>
+                            <p class="text-xs">Tél : 01 23 45 67 89</p>
+                            <p class="text-xs">Mail : contact@creche-ptitpas.fr</p>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-center text-gray-600 mt-4">© 2026 Crèche le P'tit Pas. Tous droits réservés.</p>
+                </footer>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- 2. ÉCRAN D'AUTHENTIFICATION (LOGIN)       -->
+            <!-- ========================================== -->
+            <div id="auth-screen" class="hidden h-full flex flex-col items-center justify-center p-4 bg-pink-50 overflow-y-auto">
+                <button onclick="goToLanding()" class="absolute top-4 left-4 p-2 text-pink-600 hover:bg-pink-100 rounded-full flex items-center gap-1.5 font-semibold text-xs">
+                    <i data-lucide="x" class="w-4 h-4"></i> Retour à l'accueil
+                </button>
+
+                <div class="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md border border-pink-100 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-100 rounded-full blur-2xl opacity-60"></div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-60"></div>
+
+                    <div class="flex flex-col items-center mb-6 relative z-10">
+                        <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mb-3 text-white shadow-md">
+                            <i data-lucide="baby" class="w-8 h-8"></i>
+                        </div>
+                        <h1 class="text-2xl font-extrabold text-black">Connexion</h1>
+                        <p class="text-pink-600 text-xs mt-2 font-bold italic">« Parce que chaque sourire mérite d'être partagé. »</p>
+                    </div>
+
+                    <div id="login-error" class="hidden mb-4 p-3 bg-red-100 text-red-600 text-xs text-center font-bold rounded-lg relative z-10"></div>
+
+                    <form id="login-form" class="space-y-4 relative z-10">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Adresse Email</label>
+                            <input type="email" id="login-email" required placeholder="directrice@creche.fr" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Mot de passe</label>
+                            <input type="password" id="login-password" required placeholder="123" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                        </div>
+                        <button type="submit" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5 text-sm mt-2">
+                            Se connecter à l'application
+                        </button>
+                    </form>
+
+                    <!-- Infos de démo -->
+                    <div class="mt-6 border-t border-pink-100 pt-4 text-[11px] text-gray-500 relative z-10">
+                        <p class="font-bold text-pink-600 mb-1">Comptes de démonstration (Mot de passe : 123)</p>
+                        <ul class="list-disc pl-4 space-y-0.5">
+                            <li>Sophie : <span class="font-mono text-black">directrice@creche.fr</span> (Directrice)</li>
+                            <li>Marie : <span class="font-mono text-black">marie@creche.fr</span> (Maîtresse)</li>
+                            <li>Maman de Léo : <span class="font-mono text-black">parent@creche.fr</span> (Parent)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- 3. TABLEAU DE BORD (DASHBOARD)            -->
+            <!-- ========================================== -->
+            <div id="dashboard-screen" class="hidden h-full flex flex-col md:flex-row relative">
+                
+                <!-- Sidebar (Desktop & Tablette) -->
+                <aside id="sidebar" class="bg-white border-b md:border-r border-pink-200 flex flex-col shrink-0 z-10 w-full md:w-64">
+                    <div class="p-4 flex items-center justify-between border-b border-pink-100">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white">
+                                <i data-lucide="baby" class="w-5 h-5"></i>
+                            </div>
+                            <h1 class="text-lg font-extrabold text-black tracking-tight leading-tight">Crèche le P'tit Pas</h1>
+                        </div>
+                        <!-- Déconnexion rapide sur mobile -->
+                        <button onclick="handleLogout()" class="md:hidden text-pink-800 p-2 bg-pink-50 rounded-full"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+                    </div>
+
+                    <nav class="flex-1 p-3 flex md:flex-col gap-2 overflow-x-auto no-scrollbar">
+                        <button class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-pink-100 text-pink-700 whitespace-nowrap">
+                            <i data-lucide="megaphone" class="w-5 h-5"></i> Mur d'actualités
+                        </button>
+                    </nav>
+
+                    <!-- Profil info en bas de sidebar -->
+                    <div class="p-4 border-t border-pink-100 hidden md:block mt-auto bg-pink-50/20">
+                        <div id="profile-name" class="font-extrabold text-black text-sm">Chargement...</div>
+                        <div id="profile-role" class="text-xs text-pink-600 mb-4 font-bold">---</div>
+                        <button onclick="handleLogout()" class="flex items-center gap-2 text-pink-800 hover:text-pink-600 font-bold text-xs">
+                            <i data-lucide="log-out" class="w-4 h-4"></i> Se déconnecter
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Contenu central du tableau de bord -->
+                <main class="flex-1 overflow-y-auto relative pb-24 bg-pink-50/20">
+                    
+                    <!-- En-tête de page mobile (affiche infos profil en haut) -->
+                    <div class="md:hidden p-4 bg-white border-b border-pink-100 flex justify-between items-center sticky top-0 z-10">
+                        <div>
+                            <div id="mobile-profile-name" class="font-extrabold text-black text-sm">Chargement...</div>
+                            <div id="mobile-profile-role" class="text-xs text-pink-600 font-bold">---</div>
+                        </div>
+                        <button onclick="handleLogout()" class="text-pink-800 p-2 bg-pink-50 rounded-full"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+                    </div>
+
+                    <!-- Zone de Publication et Mur -->
+                    <div id="dashboard-content-area" class="p-4 md:p-8 max-w-3xl mx-auto">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-pink-100">
+                            
+                            <h2 class="text-lg md:text-xl font-extrabold mb-4 flex items-center gap-2 text-pink-600 border-b border-pink-100 pb-3">
+                                <i data-lucide="megaphone" class="w-6 h-6"></i> Mur d'actualités
+                            </h2>
+
+                            <!-- Créer un Post -->
+                            <form id="post-form" class="mb-6 flex gap-2">
+                                <input id="post-input" type="text" required placeholder="Publier une information sur le mur général..." class="flex-1 px-4 py-3 border border-pink-200 rounded-full bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm font-medium">
+                                <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors shadow-md">
+                                    <i data-lucide="send" class="w-5 h-5"></i>
+                                </button>
+                            </form>
+
+                            <!-- Feed des Publications -->
+                            <div id="posts-container" class="space-y-5">
+                                <!-- Les publications seront générées dynamiquement ici -->
+                            </div>
+
+                        </div>
+                    </div>
+                </main>
+
+                <!-- Bouton Flottant Messagerie Privée (Bas droite) -->
+                <button id="floating-chat-btn" onclick="openChat()" class="absolute bottom-6 right-6 w-14 h-14 bg-pink-500 text-white rounded-full shadow-xl flex items-center justify-center hover:bg-pink-600 hover:scale-105 transition-transform z-40">
+                    <i data-lucide="message-square" class="w-7 h-7"></i>
+                </button>
+
+                <!-- Fenêtre flottante de chat privé -->
+                <div id="floating-chat-window" class="hidden absolute bottom-0 right-0 h-full max-h-[85%] md:max-h-[450px] bg-white shadow-2xl rounded-t-2xl md:rounded-2xl border border-pink-200 flex flex-col z-50 overflow-hidden w-full md:w-[350px] md:bottom-6 md:right-6">
+                    
+                    <!-- En-tête Chat -->
+                    <div class="bg-pink-500 text-white p-3 flex justify-between items-center shadow-sm shrink-0">
+                        <span class="font-bold flex items-center gap-2 text-sm">
+                            <i data-lucide="message-square" class="w-5 h-5"></i> Discussions Privées
+                        </span>
+                        <div class="flex gap-2">
+                            <button onclick="closeChat()" class="hover:text-pink-200 p-1"><i data-lucide="chevron-down" class="w-5 h-5"></i></button>
+                            <button onclick="closeChat()" class="hover:text-pink-200 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Liste des contacts horizontaux pour basculer facilement -->
+                    <div id="chat-contacts-bar" class="flex overflow-x-auto bg-pink-50 border-b border-pink-100 p-2 gap-2 shrink-0 no-scrollbar">
+                        <!-- Généré en JS -->
+                    </div>
+
+                    <!-- Zone des Messages -->
+                    <div id="chat-messages-container" class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 bg-white">
+                        <!-- Généré en JS -->
+                    </div>
+
+                    <!-- Formulaire Envoi Message -->
+                    <form id="chat-send-form" class="p-3 border-t border-pink-100 bg-pink-50 flex gap-2 shrink-0 items-center">
+                        <input id="chat-input" type="text" required placeholder="Votre message privé..." class="flex-1 rounded-full px-4 py-2 border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm bg-white">
+                        <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white w-9 h-9 rounded-full transition-colors flex items-center justify-center shrink-0 shadow-sm">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Integration Firebase Module -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, updateDoc, collection, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Configuration Firebase (User Config + Environment Fallbacks)
+        const userFirebaseConfig = {
+            apiKey: "AIzaSyCre56Riv_wya99xQ0PcUeP-Ftaze9LIR8",
+            authDomain: "creche-29dae.firebaseapp.com",
+            databaseURL: "https://creche-29dae-default-rtdb.firebaseio.com",
+            projectId: "creche-29dae",
+            storageBucket: "creche-29dae.firebasestorage.app",
+            messagingSenderId: "820978566801",
+            appId: "1:820978566801:web:380299a698d257aff2e130",
+            measurementId: "G-SMME0ZNBD0"
+        };
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : userFirebaseConfig;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'creche-29dae';
+
+        // Initialisation de Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // --- Modèle d'État Applicatif ---
+        const state = {
+            users: [
+                { id: 1, name: 'Sophie', role: 'Directrice', email: 'directrice@creche.fr', password: '123' },
+                { id: 2, name: 'Marie', role: 'Maîtresse', email: 'marie@creche.fr', password: '123' },
+                { id: 3, name: 'Julie', role: 'Maîtresse', email: 'julie@creche.fr', password: '123' },
+                { id: 4, name: 'Anne', role: 'Maîtresse', email: 'anne@creche.fr', password: '123' },
+                { id: 5, name: 'Maman de Léo', role: 'Parent', email: 'parent@creche.fr', password: '123' },
+            ],
+            currentUser: null,
+            viewMode: 'web', // 'web' ou 'mobile'
+            appState: 'landing', // 'landing', 'login', 'dashboard'
+            posts: [],
+            messages: [],
+            selectedContactId: 2, // Par défaut, Marie (Maîtresse)
+            isChatOpen: false,
+            firebaseUser: null
+        };
+
+        // --- Authentification Firebase Obligatoire (Rule 3) ---
+        async function authenticateFirebase() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.error("Erreur d'authentification Firebase:", err);
+            }
+        }
+
+        // --- Synchronisation en temps réel (Rule 1 & Rule 2 Compliant) ---
+        function startFirestoreSync() {
+            if (!state.firebaseUser) return;
+
+            // 1. Synchronisation des publications générales (Chemin Strict Public - Rule 1)
+            const postsCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
+            onSnapshot(postsCollectionPath, (snapshot) => {
+                const tempPosts = [];
+                snapshot.forEach((doc) => {
+                    tempPosts.push({ id: doc.id, ...doc.data() });
+                });
+                // Tri par date / timestamp décroissant en mémoire JS (Rule 2)
+                tempPosts.sort((a, b) => b.timestamp - a.timestamp);
+                state.posts = tempPosts;
+                renderPosts();
+            }, (error) => {
+                console.error("Erreur de synchronisation des posts:", error);
+            });
+
+            // 2. Synchronisation des messages privés (Chemin Strict Public - Rule 1)
+            const messagesCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'private_messages');
+            onSnapshot(messagesCollectionPath, (snapshot) => {
+                const tempMsgs = [];
+                snapshot.forEach((doc) => {
+                    tempMsgs.push({ id: doc.id, ...doc.data() });
+                });
+                // Tri par timestamp croissant pour l'historique
+                tempMsgs.sort((a, b) => a.timestamp - b.timestamp);
+                state.messages = tempMsgs;
+                renderChatMessages();
+            }, (error) => {
+                console.error("Erreur de synchronisation des messages:", error);
+            });
+        }
+
+        // --- Abonnements Auth Firebase ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                state.firebaseUser = user;
+                startFirestoreSync();
+            } else {
+                authenticateFirebase();
+            }
+        });
+
+        // --- Abonnements Événements DOM ---
+        window.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            syncViewMode();
+            renderApp();
+            lucide.createIcons();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('btn-web').addEventListener('click', () => setViewMode('web'));
+            document.getElementById('btn-mobile').addEventListener('click', () => setViewMode('mobile'));
+            document.getElementById('login-form').addEventListener('submit', handleLoginSubmit);
+            document.getElementById('post-form').addEventListener('submit', handlePostSubmit);
+            document.getElementById('chat-send-form').addEventListener('submit', handleChatSubmit);
+        }
+
+        // --- Gestion des formats de vue ---
+        function setViewMode(mode) {
+            state.viewMode = mode;
+            syncViewMode();
+        }
+
+        function syncViewMode() {
+            const viewport = document.getElementById('app-viewport');
+            const btnWeb = document.getElementById('btn-web');
+            const btnMobile = document.getElementById('btn-mobile');
+            const sidebar = document.getElementById('sidebar');
+
+            if (state.viewMode === 'mobile') {
+                viewport.className = "bg-pink-50 text-black w-full flex flex-col transition-all duration-500 relative shadow-2xl overflow-hidden max-w-[375px] h-[812px] border-[12px] border-gray-800 rounded-[2.5rem]";
+                btnMobile.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-pink-500 text-white shadow-lg";
+                btnWeb.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-gray-800 text-gray-300 hover:bg-gray-700";
+                if (sidebar) sidebar.className = "bg-white border-b border-pink-200 flex flex-col shrink-0 z-10 w-full";
+            } else {
+                viewport.className = "bg-pink-50 text-black w-full flex flex-col transition-all duration-500 relative shadow-2xl overflow-hidden max-w-7xl h-full rounded-none md:rounded-2xl border border-pink-200";
+                btnWeb.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-pink-500 text-white shadow-lg";
+                btnMobile.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-gray-800 text-gray-300 hover:bg-gray-700";
+                if (sidebar) sidebar.className = "bg-white border-r border-pink-200 flex flex-col shrink-0 z-10 w-full md:w-64";
+            }
+            renderApp();
+        }
+
+        // --- Navigation des Pages ---
+        window.goToLanding = function() {
+            state.appState = 'landing';
+            renderApp();
+        };
+
+        window.goToLogin = function() {
+            state.appState = 'login';
+            document.getElementById('login-error').classList.add('hidden');
+            renderApp();
+        };
+
+        // --- Moteur de Rendu d'Écrans ---
+        function renderApp() {
+            const landing = document.getElementById('landing-page');
+            const authScreen = document.getElementById('auth-screen');
+            const dashboard = document.getElementById('dashboard-screen');
+
+            landing.classList.add('hidden');
+            authScreen.classList.add('hidden');
+            dashboard.classList.add('hidden');
+
+            if (state.appState === 'landing') {
+                landing.classList.remove('hidden');
+            } else if (state.appState === 'login') {
+                authScreen.classList.remove('hidden');
+            } else if (state.appState === 'dashboard') {
+                dashboard.classList.remove('hidden');
+                renderDashboard();
+            }
+            lucide.createIcons();
+        }
+
+        // --- Authentification Utilisateur Local ---
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorDiv = document.getElementById('login-error');
+
+            const foundUser = state.users.find(u => u.email === email && u.password === password);
+            if (foundUser) {
+                state.currentUser = foundUser;
+                state.appState = 'dashboard';
+                renderApp();
+            } else {
+                errorDiv.innerText = "Identifiants de test incorrects.";
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        window.handleLogout = function() {
+            state.currentUser = null;
+            state.appState = 'landing';
+            state.isChatOpen = false;
+            document.getElementById('floating-chat-window').classList.add('hidden');
+            renderApp();
+        };
+
+        // --- Remplissage des Données de Profil et des Publications ---
+        function renderDashboard() {
+            if (!state.currentUser) return;
+
+            // Mise à jour de l'en-tête de profil (Desktop)
+            document.getElementById('profile-name').innerText = state.currentUser.name;
+            document.getElementById('profile-role').innerText = `(${state.currentUser.role})`;
+
+            // Mise à jour de l'en-tête de profil (Mobile)
+            document.getElementById('mobile-profile-name').innerText = state.currentUser.name;
+            document.getElementById('mobile-profile-role').innerText = `(${state.currentUser.role})`;
+
+            renderPosts();
+            renderChatContacts();
+            renderChatMessages();
+        }
+
+        // --- Rendu du Feed Général ---
+        function renderPosts() {
+            const container = document.getElementById('posts-container');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (state.posts.length === 0) {
+                container.innerHTML = `
+                    <p class="text-center text-gray-400 italic py-8 text-sm">
+                        Aucune publication pour le moment. Soyez le premier à publier !
+                    </p>
+                `;
+                return;
+            }
+
+            state.posts.forEach(post => {
+                const hasLiked = post.likes && post.likes.includes(state.currentUser.id);
+                const hasRead = post.reads && post.reads.includes(state.currentUser.id);
+
+                const postEl = document.createElement('div');
+                postEl.className = "border border-pink-100 p-4 rounded-2xl bg-white shadow-sm flex flex-col";
+
+                let commentSectionHtml = '';
+                if (post.comments && post.comments.length > 0) {
+                    post.comments.forEach(comment => {
+                        if (comment.isSystem) {
+                            commentSectionHtml += `
+                                <div class="text-xs text-green-700 italic font-medium border-b border-pink-100/50 pb-2">
+                                    ${comment.text}
+                                </div>
+                            `;
+                        } else {
+                            commentSectionHtml += `
+                                <div class="text-xs text-gray-800 border-b border-pink-100/50 pb-2">
+                                    <strong class="text-black">${comment.author} :</strong> ${comment.text}
+                                </div>
+                            `;
+                        }
+                    });
+                }
+
+                postEl.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <p class="font-extrabold text-black text-sm">
+                            ${post.author} 
+                            <span class="text-xs font-bold text-pink-600 block sm:inline sm:ml-1">(${post.role})</span>
+                        </p>
+                        <span class="text-[10px] text-gray-400 font-bold">${post.time || 'À l\'instant'}</span>
+                    </div>
+                    <p class="my-3 text-black text-sm leading-relaxed">${post.content}</p>
+                    
+                    <div class="flex gap-4 mb-4 border-t border-pink-50 pt-3">
+                        <button onclick="toggleLike('${post.id}')" class="text-xs flex items-center gap-1 font-bold ${hasLiked ? 'text-pink-600' : 'text-gray-400 hover:text-pink-500'}">
+                            <i data-lucide="heart" class="w-4 h-4 ${hasLiked ? 'fill-current' : ''}"></i> 
+                            <span>${(post.likes && post.likes.length) || 0} J'aime</span>
+                        </button>
+                        <button onclick="markAsRead('${post.id}')" ${hasRead ? 'disabled' : ''} class="text-xs flex items-center gap-1 font-bold ${hasRead ? 'text-green-700 cursor-default' : 'text-green-600 hover:text-green-800'}">
+                            <i data-lucide="check" class="w-4 h-4"></i> 
+                            <span>${hasRead ? 'Lu par vous' : 'Marquer comme lu'}</span>
+                        </button>
+                    </div>
+
+                    <div class="bg-pink-50/50 p-3 rounded-xl space-y-2 border border-pink-100">
+                        <div class="space-y-2">
+                            ${commentSectionHtml || '<p class="text-[10px] text-gray-400 italic">Aucun commentaire.</p>'}
+                        </div>
+                        <input onkeydown="handleCommentSubmit(event, '${post.id}')" type="text" placeholder="Ajouter un commentaire (Entrée pour envoyer)..." class="w-full text-xs p-2 bg-white border border-pink-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-pink-300">
+                    </div>
+                `;
+
+                container.appendChild(postEl);
+            });
+
+            lucide.createIcons();
+        }
+
+        // --- Écritures Firestore pour Mur de Communication (Rule 3 Guarded) ---
+        async function handlePostSubmit(e) {
+            e.preventDefault();
+            if (!state.firebaseUser) return;
+
+            const input = document.getElementById('post-input');
+            const content = input.value.trim();
+            if (!content) return;
+
+            const newPostObj = {
+                author: state.currentUser.name,
+                role: state.currentUser.role,
+                content: content,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                likes: [],
+                reads: [],
+                comments: [],
+                timestamp: Date.now()
+            };
+
+            try {
+                const postsCollection = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
+                await addDoc(postsCollection, newPostObj);
+                input.value = '';
+            } catch (err) {
+                console.error("Erreur d'ajout de la publication:", err);
+            }
+        }
+
+        window.toggleLike = async function(postId) {
+            if (!state.firebaseUser) return;
+            const post = state.posts.find(p => p.id === postId);
+            if (!post) return;
+
+            const userId = state.currentUser.id;
+            let newLikes = post.likes ? [...post.likes] : [];
+            if (newLikes.includes(userId)) {
+                newLikes = newLikes.filter(id => id !== userId);
+            } else {
+                newLikes.push(userId);
+            }
+
+            try {
+                const postDoc = doc(db, 'artifacts', appId, 'public', 'data', 'posts', postId);
+                await updateDoc(postDoc, { likes: newLikes });
+            } catch (err) {
+                console.error("Erreur d'ajout du J'aime:", err);
+            }
+        };
+
+        window.markAsRead = async function(postId) {
+            if (!state.firebaseUser) return;
+            const post = state.posts.find(p => p.id === postId);
+            if (!post) return;
+
+            const userId = state.currentUser.id;
+            if (post.reads && post.reads.includes(userId)) return;
+
+            const newReads = post.reads ? [...post.reads, userId] : [userId];
+            const automaticCommentText = `${state.currentUser.name} a lu cette publication, c'est noté merci 😘`;
+            const newComments = post.comments ? [...post.comments] : [];
+            newComments.push({
+                id: Date.now(),
+                text: automaticCommentText,
+                author: state.currentUser.name,
+                isSystem: true
+            });
+
+            try {
+                const postDoc = doc(db, 'artifacts', appId, 'public', 'data', 'posts', postId);
+                await updateDoc(postDoc, { reads: newReads, comments: newComments });
+            } catch (err) {
+                console.error("Erreur de marquage de lecture:", err);
+            }
+        };
+
+        window.handleCommentSubmit = async function(e, postId) {
+            if (e.key !== 'Enter') return;
+            if (!state.firebaseUser) return;
+
+            const text = e.target.value.trim();
+            if (!text) return;
+
+            const post = state.posts.find(p => p.id === postId);
+            if (!post) return;
+
+            const newComments = post.comments ? [...post.comments] : [];
+            newComments.push({
+                id: Date.now(),
+                text: text,
+                author: state.currentUser.name,
+                isSystem: false
+            });
+
+            try {
+                const postDoc = doc(db, 'artifacts', appId, 'public', 'data', 'posts', postId);
+                await updateDoc(postDoc, { comments: newComments });
+                e.target.value = '';
+            } catch (err) {
+                console.error("Erreur d'ajout du commentaire:", err);
+            }
+        };
+
+        // ==========================================
+        // SYSTEME DE MESSAGERIE PRIVEE INTERACTIVE (Firestore)
+        // ==========================================
+        window.openChat = function() {
+            state.isChatOpen = true;
+            document.getElementById('floating-chat-window').classList.remove('hidden');
+            document.getElementById('floating-chat-btn').classList.add('hidden');
+            renderChatContacts();
+            renderChatMessages();
+        };
+
+        window.closeChat = function() {
+            state.isChatOpen = false;
+            document.getElementById('floating-chat-window').classList.add('hidden');
+            document.getElementById('floating-chat-btn').classList.remove('hidden');
+        };
+
+        window.selectChatContact = function(contactId) {
+            state.selectedContactId = Number(contactId);
+            renderChatContacts();
+            renderChatMessages();
+        };
+
+        function renderChatContacts() {
+            const container = document.getElementById('chat-contacts-bar');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            const contacts = state.users.filter(u => u.id !== state.currentUser.id);
+            contacts.forEach(c => {
+                const isSelected = c.id === state.selectedContactId;
+                const contactBtn = document.createElement('button');
+                contactBtn.onclick = () => selectChatContact(c.id);
+                contactBtn.className = `px-3 py-1 rounded-full text-[10px] font-bold border transition-all shrink-0 ${isSelected ? 'bg-pink-500 text-white border-pink-500 shadow-sm' : 'bg-white text-pink-700 border-pink-200 hover:bg-pink-100'}`;
+                contactBtn.innerText = c.name;
+
+                container.appendChild(contactBtn);
+            });
+        }
+
+        function renderChatMessages() {
+            const container = document.getElementById('chat-messages-container');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            const partnerId = state.selectedContactId;
+            const myId = state.currentUser.id;
+
+            // Filtrage des messages pour ne garder que la conversation active entre (myId et partnerId)
+            const conversation = state.messages.filter(msg => {
+                return (msg.senderId === myId && msg.receiverId === partnerId) || 
+                       (msg.senderId === partnerId && msg.receiverId === myId);
+            });
+
+            if (conversation.length === 0) {
+                const contactName = state.users.find(u => u.id === partnerId)?.name || 'votre contact';
+                container.innerHTML = `
+                    <div class="m-auto text-center flex flex-col items-center">
+                        <i data-lucide="message-square" class="text-pink-100 mb-2 w-8 h-8"></i>
+                        <p class="text-[10px] text-gray-400 italic px-4">
+                            Envoyez le premier message à ${contactName}...
+                        </p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            conversation.forEach(msg => {
+                const isMe = msg.senderId === myId;
+                const msgEl = document.createElement('div');
+                msgEl.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'}`;
+
+                msgEl.innerHTML = `
+                    <span class="px-3 py-2 text-xs max-w-[85%] shadow-sm ${isMe ? 'bg-pink-500 text-white rounded-2xl rounded-tr-none' : 'bg-pink-100 text-black rounded-2xl rounded-tl-none'}">
+                        ${msg.text}
+                    </span>
+                    <span class="text-[9px] text-gray-400 mt-1 font-bold">${msg.time}</span>
+                `;
+                container.appendChild(msgEl);
+            });
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            if (!state.firebaseUser) return;
+
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text || !state.selectedContactId) return;
+
+            const timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const newMsg = {
+                senderId: state.currentUser.id,
+                receiverId: state.selectedContactId,
+                text: text,
+                time: timeNow,
+                timestamp: Date.now()
+            };
+
+            try {
+                const messagesCollection = collection(db, 'artifacts', appId, 'public', 'data', 'private_messages');
+                await addDoc(messagesCollection, newMsg);
+                input.value = '';
+            } catch (err) {
+                console.error("Erreur d'envoi du message privé:", err);
+            }
+        }
+    </script>
+</body>
+</html>
