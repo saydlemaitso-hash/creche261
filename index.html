@@ -19,354 +19,413 @@
         }
     </style>
 </head>
-<body class="h-full bg-gray-200 flex flex-col font-sans overflow-hidden">
+<body class="h-full bg-pink-50 text-black flex flex-col font-sans overflow-hidden">
 
-    <!-- Barre d'outils de simulation (Mode Web / Mobile) -->
-    <div class="bg-gray-900 text-white p-3 flex justify-center items-center gap-4 shadow-md z-50 shrink-0">
-        <span class="text-sm font-semibold text-gray-400 hidden sm:block">Aperçu :</span>
-        <button id="btn-web" class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-pink-500 text-white shadow-lg">
-            <i data-lucide="monitor" class="w-4 h-4"></i> Mode Web
-        </button>
-        <button id="btn-mobile" class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">
-            <i data-lucide="smartphone" class="w-4 h-4"></i> Mode Mobile
-        </button>
-    </div>
-
-    <!-- Conteneur principal de l'application -->
-    <div class="flex-1 flex justify-center items-center p-0 md:p-4 overflow-hidden">
+    <!-- Conteneur principal de l'application (S'adapte automatiquement à tous les écrans) -->
+    <div id="app-viewport" class="w-full h-full flex flex-col relative overflow-hidden">
         
-        <!-- Le "téléphone" virtuel ou l'écran web -->
-        <div id="app-viewport" class="bg-pink-50 text-black w-full flex flex-col transition-all duration-500 relative shadow-2xl overflow-hidden max-w-7xl h-full rounded-none md:rounded-2xl border border-pink-200">
+        <!-- ========================================== -->
+        <!-- 1. PAGE D'ACCUEIL PUBLIQUE (LANDING)       -->
+        <!-- ========================================== -->
+        <div id="landing-page" class="h-full overflow-y-auto bg-white flex flex-col scroll-smooth">
             
-            <!-- ========================================== -->
-            <!-- 1. PAGE D'ACCUEIL PUBLIQUE (LANDING)       -->
-            <!-- ========================================== -->
-            <div id="landing-page" class="h-full overflow-y-auto bg-white flex flex-col scroll-smooth">
+            <!-- Header de la page d'accueil -->
+            <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-pink-100 p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white">
+                        <i data-lucide="baby" class="w-5 h-5"></i>
+                    </div>
+                    <span class="font-extrabold text-lg text-black">Crèche le P'tit Pas</span>
+                </div>
                 
-                <!-- Header de la page d'accueil -->
-                <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-pink-100 p-4 flex justify-between items-center">
-                    <div class="flex items-center gap-2">
+                <nav class="flex items-center gap-4">
+                    <button onclick="goToLogin(false)" class="text-sm font-bold text-pink-600 hover:text-pink-800">Connexion</button>
+                    <button onclick="goToLogin(true)" class="text-sm font-bold bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600 transition-colors shadow-sm">Créer un compte</button>
+                </nav>
+            </header>
+
+            <!-- Hero Section -->
+            <section class="px-6 py-12 md:py-20 bg-pink-50 text-center relative overflow-hidden shrink-0">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40 -mt-20 -mr-20"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-pink-300 rounded-full blur-3xl opacity-30 -mb-10 -ml-10"></div>
+                
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-black mb-4 leading-tight">
+                        Bienvenue sur <span class="text-pink-500">Crèche le P'tit Pas</span>
+                    </h1>
+                    <p class="text-pink-600 font-bold italic text-lg md:text-xl mb-6">
+                        « Parce que chaque sourire mérite d'être partagé. »
+                    </p>
+                    <p class="text-gray-700 text-sm md:text-lg mb-8 leading-relaxed">
+                        La solution numérique qui rapproche les parents, les éducateurs et les enfants pour un suivi quotidien simple, sécurisé et efficace.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="goToLogin(false)" class="bg-pink-500 text-white font-bold px-6 py-3 rounded-full hover:bg-pink-600 transition-colors shadow-lg flex items-center justify-center gap-2">
+                            <i data-lucide="smartphone" class="w-5 h-5"></i> Découvrir l'application
+                        </button>
+                        <button onclick="goToLogin(true)" class="bg-white text-pink-600 border-2 border-pink-500 font-bold px-6 py-3 rounded-full hover:bg-pink-50 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="baby" class="w-5 h-5"></i> Inscrire mon enfant
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Zone d'illustration principale -->
+            <section class="px-6 -mt-8 relative z-20 flex justify-center shrink-0">
+                <div class="bg-white p-4 rounded-3xl shadow-xl border border-pink-100 flex items-center justify-center w-full max-w-4xl h-44 md:h-72 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-pink-100 to-pink-50 opacity-50"></div>
+                    <i data-lucide="baby" class="w-20 h-20 text-pink-400 group-hover:scale-110 transition-transform duration-500 relative z-10"></i>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section class="px-6 py-12 max-w-6xl mx-auto shrink-0">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-black">Nos Services</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                        <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="baby" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-black mb-2">Suivi Quotidien</h3>
+                        <p class="text-xs text-gray-600">Consultez les repas, siestes, activités et informations de votre enfant en temps réel.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                        <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="message-square" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-black mb-2">Communication</h3>
+                        <p class="text-xs text-gray-600">Échangez directement avec les éducateurs via une messagerie sécurisée.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                        <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="image" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-black mb-2">Galerie Photos</h3>
+                        <p class="text-xs text-gray-600">Recevez des photos et des souvenirs des moments importants de la journée.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
+                        <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="credit-card" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-black mb-2">Paiement Simplifié</h3>
+                        <p class="text-xs text-gray-600">Réglez les frais de garde directement et en toute sécurité depuis l'application.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Avantages -->
+            <section class="bg-pink-50 py-12 px-6 shrink-0">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold text-center mb-6 text-black">Pourquoi choisir notre application ?</h2>
+                    <div class="bg-white p-6 rounded-3xl border border-pink-100 space-y-3">
+                        <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Suivi en temps réel de l'évolution de l'enfant</span></div>
+                        <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Sécurité renforcée et protection des données</span></div>
+                        <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Communication transparente entre crèche et famille</span></div>
+                        <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Gestion administrative simplifiée pour la direction</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Témoignages -->
+            <section class="py-12 px-6 max-w-4xl mx-auto shrink-0">
+                <h2 class="text-2xl font-bold text-center mb-8 text-black">Témoignages</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100">
+                        <p class="italic text-xs text-gray-700 mb-3">"Grâce à l'application, je peux suivre les activités de ma fille même lorsque je suis au travail. C'est magique !"</p>
+                        <p class="font-bold text-xs text-black">— Parent utilisateur</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100">
+                        <p class="italic text-xs text-gray-700 mb-3">"L'application facilite notre communication avec les familles. Moins de papiers et plus de partage."</p>
+                        <p class="font-bold text-xs text-black">— Éducatrice</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="bg-gray-900 text-gray-400 py-10 px-6 mt-auto border-t border-gray-800 shrink-0 text-center sm:text-left">
+                <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 pb-6 border-b border-gray-800 text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 justify-center sm:justify-start text-white font-bold mb-2">
+                            <i data-lucide="baby" class="text-pink-500 w-5 h-5"></i>
+                            <span>Crèche le P'tit Pas</span>
+                        </div>
+                        <p class="text-xs text-pink-400 italic font-semibold">« Grandir ensemble, en toute confiance. » 🌱👶💙</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2">Informations</h4>
+                        <ul class="space-y-1 text-xs">
+                            <li><a href="#" class="hover:text-pink-400">À propos</a></li>
+                            <li><a href="#" class="hover:text-pink-400">Politique de confidentialité</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2">Contact</h4>
+                        <p class="text-xs">Tél : 01 23 45 67 89</p>
+                        <p class="text-xs">Mail : contact@creche-ptitpas.fr</p>
+                    </div>
+                </div>
+                <p class="text-[10px] text-center text-gray-600 mt-4">© 2026 Crèche le P'tit Pas. Tous droits réservés.</p>
+            </footer>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 2. ÉCRAN D'AUTHENTIFICATION (LOGIN)       -->
+        <!-- ========================================== -->
+        <div id="auth-screen" class="hidden h-full flex flex-col items-center justify-center p-4 bg-pink-50 overflow-y-auto">
+            <button onclick="goToLanding()" class="absolute top-4 left-4 p-2 text-pink-600 hover:bg-pink-100 rounded-full flex items-center gap-1.5 font-semibold text-xs">
+                <i data-lucide="x" class="w-4 h-4"></i> Retour à l'accueil
+            </button>
+
+            <div class="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md border border-pink-100 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-100 rounded-full blur-2xl opacity-60"></div>
+                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-60"></div>
+
+                <div class="flex flex-col items-center mb-6 relative z-10">
+                    <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mb-3 text-white shadow-md">
+                        <i data-lucide="baby" class="w-8 h-8"></i>
+                    </div>
+                    <h1 id="auth-title" class="text-2xl font-extrabold text-black">Connexion</h1>
+                    <p class="text-pink-600 text-xs mt-2 font-bold italic text-center">« Parce que chaque sourire mérite d'être partagé. »</p>
+                </div>
+
+                <div id="login-error" class="hidden mb-4 p-3 bg-red-100 text-red-600 text-xs text-center font-bold rounded-lg relative z-10"></div>
+
+                <!-- Formulaire de Connexion -->
+                <form id="login-form" class="space-y-4 relative z-10">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Adresse Email</label>
+                        <input type="email" id="login-email" required placeholder="nom@creche.fr" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Mot de passe</label>
+                        <input type="password" id="login-password" required placeholder="Mot de passe" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                    </div>
+                    <button type="submit" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5 text-sm mt-2">
+                        Se connecter à l'application
+                    </button>
+                    <div class="text-center mt-3">
+                        <button type="button" onclick="toggleAuthMode(true)" class="text-pink-600 text-xs font-bold hover:underline">Pas de compte ? Créer un compte</button>
+                    </div>
+                </form>
+
+                <!-- Formulaire de Création de Compte (Requirement 3) -->
+                <form id="register-form" class="hidden space-y-4 relative z-10">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Nom Complet</label>
+                        <input type="text" id="register-name" required placeholder="Ex: Sophie Martin" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Adresse Email</label>
+                        <input type="email" id="register-email" required placeholder="votreemail@creche.fr" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Rôle / Profil de compte</label>
+                        <select id="register-role" required class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                            <option value="Parent">Parent</option>
+                            <option value="Maîtresse">Maîtresse</option>
+                            <option value="Directrice">Directrice</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Mot de passe</label>
+                        <input type="password" id="register-password" required placeholder="Choisissez un mot de passe" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
+                    </div>
+                    <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5 text-sm mt-2">
+                        Créer mon compte
+                    </button>
+                    <div class="text-center mt-3">
+                        <button type="button" onclick="toggleAuthMode(false)" class="text-pink-600 text-xs font-bold hover:underline">Déjà inscrit ? Se connecter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. TABLEAU DE BORD (DASHBOARD)            -->
+        <!-- ========================================== -->
+        <div id="dashboard-screen" class="hidden h-full flex flex-col md:flex-row relative">
+            
+            <!-- Sidebar (Desktop & Tablette) -->
+            <aside id="sidebar" class="bg-white border-b md:border-r border-pink-200 flex flex-col shrink-0 z-10 w-full md:w-64">
+                <div class="p-4 flex items-center justify-between border-b border-pink-100">
+                    <div class="flex items-center space-x-2">
                         <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white">
                             <i data-lucide="baby" class="w-5 h-5"></i>
                         </div>
-                        <span class="font-extrabold text-lg text-black">Crèche le P'tit Pas</span>
+                        <h1 class="text-lg font-extrabold text-black tracking-tight leading-tight">Crèche le P'tit Pas</h1>
                     </div>
-                    
-                    <nav class="flex items-center gap-4">
-                        <a href="#contact-footer" class="text-sm font-semibold text-gray-600 hover:text-pink-600 hidden sm:inline">Contact</a>
-                        <button onclick="goToLogin()" class="text-sm font-bold text-pink-600 hover:text-pink-800">Connexion</button>
-                        <button onclick="goToLogin()" class="text-sm font-bold bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600 transition-colors shadow-sm">Créer un compte</button>
-                    </nav>
-                </header>
-
-                <!-- Hero Section -->
-                <section class="px-6 py-12 md:py-20 bg-pink-50 text-center relative overflow-hidden shrink-0">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40 -mt-20 -mr-20"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-pink-300 rounded-full blur-3xl opacity-30 -mb-10 -ml-10"></div>
-                    
-                    <div class="relative z-10 max-w-3xl mx-auto">
-                        <h1 class="text-3xl md:text-5xl font-extrabold text-black mb-4 leading-tight">
-                            Bienvenue sur <span class="text-pink-500">Crèche le P'tit Pas</span>
-                        </h1>
-                        <p class="text-pink-600 font-bold italic text-lg md:text-xl mb-6">
-                            « Parce que chaque sourire mérite d'être partagé. »
-                        </p>
-                        <p class="text-gray-700 text-sm md:text-lg mb-8 leading-relaxed">
-                            La solution numérique qui rapproche les parents, les éducateurs et les enfants pour un suivi quotidien simple, sécurisé et efficace.
-                        </p>
-                        <div class="flex flex-col sm:flex-row justify-center gap-4">
-                            <button onclick="goToLogin()" class="bg-pink-500 text-white font-bold px-6 py-3 rounded-full hover:bg-pink-600 transition-colors shadow-lg flex items-center justify-center gap-2">
-                                <i data-lucide="smartphone" class="w-5 h-5"></i> Découvrir l'application
-                            </button>
-                            <button onclick="goToLogin()" class="bg-white text-pink-600 border-2 border-pink-500 font-bold px-6 py-3 rounded-full hover:bg-pink-50 transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="baby" class="w-5 h-5"></i> Inscrire mon enfant
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Zone d'illustration principale -->
-                <section class="px-6 -mt-8 relative z-20 flex justify-center shrink-0">
-                    <div class="bg-white p-4 rounded-3xl shadow-xl border border-pink-100 flex items-center justify-center w-full max-w-4xl h-44 md:h-72 relative overflow-hidden group">
-                        <div class="absolute inset-0 bg-gradient-to-r from-pink-100 to-pink-50 opacity-50"></div>
-                        <i data-lucide="baby" class="w-20 h-20 text-pink-400 group-hover:scale-110 transition-transform duration-500 relative z-10"></i>
-                    </div>
-                </section>
-
-                <!-- Services Section -->
-                <section class="px-6 py-12 max-w-6xl mx-auto shrink-0">
-                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-black">Nos Services</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Service 1 -->
-                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
-                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                <i data-lucide="baby" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-bold text-black mb-2">Suivi Quotidien</h3>
-                            <p class="text-xs text-gray-600">Consultez les repas, siestes, activités et informations de votre enfant en temps réel.</p>
-                        </div>
-                        <!-- Service 2 -->
-                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
-                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                <i data-lucide="message-square" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-bold text-black mb-2">Communication Instantanée</h3>
-                            <p class="text-xs text-gray-600">Échangez directement avec les éducateurs via une messagerie sécurisée.</p>
-                        </div>
-                        <!-- Service 3 -->
-                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
-                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                <i data-lucide="image" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-bold text-black mb-2">Galerie Photos</h3>
-                            <p class="text-xs text-gray-600">Recevez des photos et des souvenirs des moments importants de la journée.</p>
-                        </div>
-                        <!-- Service 4 -->
-                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 text-center hover:shadow-md transition-all">
-                            <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                <i data-lucide="credit-card" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-bold text-black mb-2">Paiement Simplifié</h3>
-                            <p class="text-xs text-gray-600">Réglez les frais de garde directement et en toute sécurité depuis l'application.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Avantages & Témoignages -->
-                <section class="bg-pink-50 py-12 px-6 shrink-0">
-                    <div class="max-w-4xl mx-auto">
-                        <h2 class="text-2xl font-bold text-center mb-6 text-black">Pourquoi choisir notre application ?</h2>
-                        <div class="bg-white p-6 rounded-3xl border border-pink-100 space-y-3">
-                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Suivi en temps réel de l'évolution de l'enfant</span></div>
-                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Sécurité renforcée et protection des données</span></div>
-                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Communication transparente entre crèche et famille</span></div>
-                            <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="text-green-500 w-5 h-5 shrink-0"></i><span class="text-sm font-semibold text-gray-800">Gestion administrative simplifiée pour la direction</span></div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="py-12 px-6 max-w-4xl mx-auto shrink-0">
-                    <h2 class="text-2xl font-bold text-center mb-8 text-black">Témoignages</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100">
-                            <p class="italic text-xs text-gray-700 mb-3">"Grâce à l'application, je peux suivre les activités de ma fille même lorsque je suis au travail. C'est magique !"</p>
-                            <p class="font-bold text-xs text-black">— Parent utilisateur</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100">
-                            <p class="italic text-xs text-gray-700 mb-3">"L'application facilite notre communication avec les familles. Moins de papiers et plus de partage."</p>
-                            <p class="font-bold text-xs text-black">— Éducatrice</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Chiffres Clés -->
-                <section class="bg-pink-500 text-white py-8 px-6 shrink-0">
-                    <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-                        <div><i data-lucide="baby" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">+500</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Enfants</div></div>
-                        <div><i data-lucide="users" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">+300</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Familles</div></div>
-                        <div><i data-lucide="home" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">5</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Crèches</div></div>
-                        <div><i data-lucide="star" class="mx-auto mb-1 opacity-85 w-6 h-6"></i><div class="text-xl font-extrabold">98%</div><div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Satisfaction</div></div>
-                    </div>
-                </section>
-
-                <!-- Appel à l'action -->
-                <section class="py-12 px-6 text-center max-w-xl mx-auto shrink-0">
-                    <h2 class="text-xl md:text-2xl font-bold mb-3 text-black">Prêt à simplifier votre quotidien ?</h2>
-                    <p class="text-xs text-gray-600 mb-6">Rejoignez-nous dès maintenant pour faire un pas vers la modernité.</p>
-                    <div class="flex justify-center gap-3">
-                        <button onclick="goToLogin()" class="bg-green-500 text-white font-bold px-5 py-2.5 rounded-full hover:bg-green-600 transition-colors shadow-sm text-sm">Créer un compte</button>
-                        <button class="bg-blue-500 text-white font-bold px-5 py-2.5 rounded-full hover:bg-blue-600 transition-colors shadow-sm text-sm">Demander une démo</button>
-                    </div>
-                </section>
-
-                <!-- Footer -->
-                <footer id="contact-footer" class="bg-gray-900 text-gray-400 py-10 px-6 mt-auto border-t border-gray-800 shrink-0 text-center sm:text-left">
-                    <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 pb-6 border-b border-gray-800 text-sm">
-                        <div>
-                            <div class="flex items-center gap-2 justify-center sm:justify-start text-white font-bold mb-2">
-                                <i data-lucide="baby" class="text-pink-500 w-5 h-5"></i>
-                                <span>Crèche le P'tit Pas</span>
-                            </div>
-                            <p class="text-xs text-pink-400 italic font-semibold">« Grandir ensemble, en toute confiance. » 🌱👶💙</p>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold mb-2">Informations</h4>
-                            <ul class="space-y-1 text-xs">
-                                <li><a href="#" class="hover:text-pink-400">À propos</a></li>
-                                <li><a href="#" class="hover:text-pink-400">Politique de confidentialité</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold mb-2">Contact</h4>
-                            <p class="text-xs">Tél : 01 23 45 67 89</p>
-                            <p class="text-xs">Mail : contact@creche-ptitpas.fr</p>
-                        </div>
-                    </div>
-                    <p class="text-[10px] text-center text-gray-600 mt-4">© 2026 Crèche le P'tit Pas. Tous droits réservés.</p>
-                </footer>
-            </div>
-
-            <!-- ========================================== -->
-            <!-- 2. ÉCRAN D'AUTHENTIFICATION (LOGIN)       -->
-            <!-- ========================================== -->
-            <div id="auth-screen" class="hidden h-full flex flex-col items-center justify-center p-4 bg-pink-50 overflow-y-auto">
-                <button onclick="goToLanding()" class="absolute top-4 left-4 p-2 text-pink-600 hover:bg-pink-100 rounded-full flex items-center gap-1.5 font-semibold text-xs">
-                    <i data-lucide="x" class="w-4 h-4"></i> Retour à l'accueil
-                </button>
-
-                <div class="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md border border-pink-100 relative overflow-hidden">
-                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-100 rounded-full blur-2xl opacity-60"></div>
-                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-60"></div>
-
-                    <div class="flex flex-col items-center mb-6 relative z-10">
-                        <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mb-3 text-white shadow-md">
-                            <i data-lucide="baby" class="w-8 h-8"></i>
-                        </div>
-                        <h1 class="text-2xl font-extrabold text-black">Connexion</h1>
-                        <p class="text-pink-600 text-xs mt-2 font-bold italic">« Parce que chaque sourire mérite d'être partagé. »</p>
-                    </div>
-
-                    <div id="login-error" class="hidden mb-4 p-3 bg-red-100 text-red-600 text-xs text-center font-bold rounded-lg relative z-10"></div>
-
-                    <form id="login-form" class="space-y-4 relative z-10">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Adresse Email</label>
-                            <input type="email" id="login-email" required placeholder="directrice@creche.fr" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Mot de passe</label>
-                            <input type="password" id="login-password" required placeholder="123" class="w-full p-3 border border-pink-200 rounded-xl bg-pink-50 text-black text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pink-300">
-                        </div>
-                        <button type="submit" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5 text-sm mt-2">
-                            Se connecter à l'application
-                        </button>
-                    </form>
-
-                    <!-- Infos de démo -->
-                    <div class="mt-6 border-t border-pink-100 pt-4 text-[11px] text-gray-500 relative z-10">
-                        <p class="font-bold text-pink-600 mb-1">Comptes de démonstration (Mot de passe : 123)</p>
-                        <ul class="list-disc pl-4 space-y-0.5">
-                            <li>Sophie : <span class="font-mono text-black">directrice@creche.fr</span> (Directrice)</li>
-                            <li>Marie : <span class="font-mono text-black">marie@creche.fr</span> (Maîtresse)</li>
-                            <li>Maman de Léo : <span class="font-mono text-black">parent@creche.fr</span> (Parent)</li>
-                        </ul>
-                    </div>
+                    <button onclick="handleLogout()" class="md:hidden text-pink-800 p-2 bg-pink-50 rounded-full"><i data-lucide="log-out" class="w-4 h-4"></i></button>
                 </div>
-            </div>
 
-            <!-- ========================================== -->
-            <!-- 3. TABLEAU DE BORD (DASHBOARD)            -->
-            <!-- ========================================== -->
-            <div id="dashboard-screen" class="hidden h-full flex flex-col md:flex-row relative">
+                <!-- Navigation Tabs with Newsfeed and Follow-up Progress Booklet -->
+                <nav class="flex-1 p-3 flex md:flex-col gap-2 overflow-x-auto no-scrollbar">
+                    <button id="nav-news" onclick="switchTab('news')" class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-pink-100 text-pink-700 whitespace-nowrap transition-colors">
+                        <i data-lucide="megaphone" class="w-5 h-5"></i> Mur d'actualités
+                    </button>
+                    <button id="nav-carnet" onclick="switchTab('carnet')" class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-gray-600 hover:bg-pink-50 hover:text-pink-600 whitespace-nowrap transition-colors">
+                        <i data-lucide="book-open" class="w-5 h-5"></i> Carnet de Suivi
+                    </button>
+                </nav>
+
+                <!-- Profil info en bas de sidebar -->
+                <div class="p-4 border-t border-pink-100 hidden md:block mt-auto bg-pink-50/20">
+                    <div id="profile-name" class="font-extrabold text-black text-sm">Chargement...</div>
+                    <div id="profile-role" class="text-xs text-pink-600 mb-4 font-bold">---</div>
+                    <button onclick="handleLogout()" class="flex items-center gap-2 text-pink-800 hover:text-pink-600 font-bold text-xs">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Se déconnecter
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Contenu de la communication générale & carnets -->
+            <main class="flex-1 overflow-y-auto relative pb-24 bg-pink-50/20">
                 
-                <!-- Sidebar (Desktop & Tablette) -->
-                <aside id="sidebar" class="bg-white border-b md:border-r border-pink-200 flex flex-col shrink-0 z-10 w-full md:w-64">
-                    <div class="p-4 flex items-center justify-between border-b border-pink-100">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white">
-                                <i data-lucide="baby" class="w-5 h-5"></i>
-                            </div>
-                            <h1 class="text-lg font-extrabold text-black tracking-tight leading-tight">Crèche le P'tit Pas</h1>
-                        </div>
-                        <!-- Déconnexion rapide sur mobile -->
-                        <button onclick="handleLogout()" class="md:hidden text-pink-800 p-2 bg-pink-50 rounded-full"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+                <!-- En-tête de page mobile -->
+                <div class="md:hidden p-4 bg-white border-b border-pink-100 flex justify-between items-center sticky top-0 z-10">
+                    <div>
+                        <div id="mobile-profile-name" class="font-extrabold text-black text-sm">Chargement...</div>
+                        <div id="mobile-profile-role" class="text-xs text-pink-600 font-bold">---</div>
                     </div>
+                    <button onclick="handleLogout()" class="text-pink-800 p-2 bg-pink-50 rounded-full"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+                </div>
 
-                    <nav class="flex-1 p-3 flex md:flex-col gap-2 overflow-x-auto no-scrollbar">
-                        <button class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-pink-100 text-pink-700 whitespace-nowrap">
-                            <i data-lucide="megaphone" class="w-5 h-5"></i> Mur d'actualités
-                        </button>
-                    </nav>
+                <!-- ONGLET 1: MUR D'ACTUALITÉS -->
+                <div id="tab-news-content" class="p-4 md:p-8 max-w-3xl mx-auto">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-pink-100">
+                        <h2 class="text-lg md:text-xl font-extrabold mb-4 flex items-center gap-2 text-pink-600 border-b border-pink-100 pb-3">
+                            <i data-lucide="megaphone" class="w-6 h-6"></i> Mur d'actualités
+                        </h2>
 
-                    <!-- Profil info en bas de sidebar -->
-                    <div class="p-4 border-t border-pink-100 hidden md:block mt-auto bg-pink-50/20">
-                        <div id="profile-name" class="font-extrabold text-black text-sm">Chargement...</div>
-                        <div id="profile-role" class="text-xs text-pink-600 mb-4 font-bold">---</div>
-                        <button onclick="handleLogout()" class="flex items-center gap-2 text-pink-800 hover:text-pink-600 font-bold text-xs">
-                            <i data-lucide="log-out" class="w-4 h-4"></i> Se déconnecter
-                        </button>
-                    </div>
-                </aside>
-
-                <!-- Contenu central du tableau de bord -->
-                <main class="flex-1 overflow-y-auto relative pb-24 bg-pink-50/20">
-                    
-                    <!-- En-tête de page mobile (affiche infos profil en haut) -->
-                    <div class="md:hidden p-4 bg-white border-b border-pink-100 flex justify-between items-center sticky top-0 z-10">
-                        <div>
-                            <div id="mobile-profile-name" class="font-extrabold text-black text-sm">Chargement...</div>
-                            <div id="mobile-profile-role" class="text-xs text-pink-600 font-bold">---</div>
-                        </div>
-                        <button onclick="handleLogout()" class="text-pink-800 p-2 bg-pink-50 rounded-full"><i data-lucide="log-out" class="w-4 h-4"></i></button>
-                    </div>
-
-                    <!-- Zone de Publication et Mur -->
-                    <div id="dashboard-content-area" class="p-4 md:p-8 max-w-3xl mx-auto">
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-pink-100">
-                            
-                            <h2 class="text-lg md:text-xl font-extrabold mb-4 flex items-center gap-2 text-pink-600 border-b border-pink-100 pb-3">
-                                <i data-lucide="megaphone" class="w-6 h-6"></i> Mur d'actualités
-                            </h2>
-
-                            <!-- Créer un Post -->
-                            <form id="post-form" class="mb-6 flex gap-2">
+                        <!-- Créer un Post avec image jointe (Requirement 4) -->
+                        <form id="post-form" class="mb-6 flex flex-col gap-3">
+                            <div class="flex gap-2">
                                 <input id="post-input" type="text" required placeholder="Publier une information sur le mur général..." class="flex-1 px-4 py-3 border border-pink-200 rounded-full bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm font-medium">
+                                
+                                <!-- Entrée fichier masquée -->
+                                <input type="file" id="post-image-input" accept="image/*" class="hidden" onchange="handlePostImageSelect(event)">
+                                
+                                <!-- Bouton Icône image -->
+                                <button type="button" onclick="triggerPostImageInput()" class="bg-pink-100 hover:bg-pink-200 text-pink-600 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all border border-pink-200" title="Ajouter une image">
+                                    <i data-lucide="image" class="w-5 h-5"></i>
+                                </button>
+
                                 <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors shadow-md">
                                     <i data-lucide="send" class="w-5 h-5"></i>
                                 </button>
-                            </form>
-
-                            <!-- Feed des Publications -->
-                            <div id="posts-container" class="space-y-5">
-                                <!-- Les publications seront générées dynamiquement ici -->
                             </div>
+                            
+                            <!-- Vignette de prévisualisation de l'image -->
+                            <div id="image-preview-container" class="hidden relative w-24 h-24 bg-gray-100 rounded-xl border border-pink-200 overflow-hidden shadow-sm">
+                                <img id="image-preview-img" src="" class="w-full h-full object-cover">
+                                <button type="button" onclick="clearSelectedImage()" class="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-black/85 transition-colors">
+                                    <i data-lucide="x" class="w-3 h-3"></i>
+                                </button>
+                            </div>
+                        </form>
 
-                        </div>
+                        <!-- Feed des Publications -->
+                        <div id="posts-container" class="space-y-5"></div>
                     </div>
-                </main>
-
-                <!-- Bouton Flottant Messagerie Privée (Bas droite) -->
-                <button id="floating-chat-btn" onclick="openChat()" class="absolute bottom-6 right-6 w-14 h-14 bg-pink-500 text-white rounded-full shadow-xl flex items-center justify-center hover:bg-pink-600 hover:scale-105 transition-transform z-40">
-                    <i data-lucide="message-square" class="w-7 h-7"></i>
-                </button>
-
-                <!-- Fenêtre flottante de chat privé -->
-                <div id="floating-chat-window" class="hidden absolute bottom-0 right-0 h-full max-h-[85%] md:max-h-[450px] bg-white shadow-2xl rounded-t-2xl md:rounded-2xl border border-pink-200 flex flex-col z-50 overflow-hidden w-full md:w-[350px] md:bottom-6 md:right-6">
-                    
-                    <!-- En-tête Chat -->
-                    <div class="bg-pink-500 text-white p-3 flex justify-between items-center shadow-sm shrink-0">
-                        <span class="font-bold flex items-center gap-2 text-sm">
-                            <i data-lucide="message-square" class="w-5 h-5"></i> Discussions Privées
-                        </span>
-                        <div class="flex gap-2">
-                            <button onclick="closeChat()" class="hover:text-pink-200 p-1"><i data-lucide="chevron-down" class="w-5 h-5"></i></button>
-                            <button onclick="closeChat()" class="hover:text-pink-200 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Liste des contacts horizontaux pour basculer facilement -->
-                    <div id="chat-contacts-bar" class="flex overflow-x-auto bg-pink-50 border-b border-pink-100 p-2 gap-2 shrink-0 no-scrollbar">
-                        <!-- Généré en JS -->
-                    </div>
-
-                    <!-- Zone des Messages -->
-                    <div id="chat-messages-container" class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 bg-white">
-                        <!-- Généré en JS -->
-                    </div>
-
-                    <!-- Formulaire Envoi Message -->
-                    <form id="chat-send-form" class="p-3 border-t border-pink-100 bg-pink-50 flex gap-2 shrink-0 items-center">
-                        <input id="chat-input" type="text" required placeholder="Votre message privé..." class="flex-1 rounded-full px-4 py-2 border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm bg-white">
-                        <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white w-9 h-9 rounded-full transition-colors flex items-center justify-center shrink-0 shadow-sm">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                        </button>
-                    </form>
-
                 </div>
+
+                <!-- ONGLET 2: CARNET DE SUIVI (PRIVÉ) -->
+                <div id="tab-carnet-content" class="hidden p-4 md:p-8 max-w-5xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        
+                        <!-- Formulaire d'évolution (Réservé Educateurs / Direction) -->
+                        <div id="carnet-form-container" class="lg:col-span-1 bg-white p-5 rounded-2xl border border-pink-100 shadow-sm hidden">
+                            <h3 id="carnet-form-title" class="font-extrabold text-pink-600 text-sm mb-4 pb-2 border-b border-pink-100 flex items-center gap-1.5">
+                                <i data-lucide="book-open" class="w-4 h-4"></i> Carnet de l'enfant
+                            </h3>
+                            <form id="carnet-form" class="space-y-3">
+                                <input type="hidden" id="carnet-id">
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Nom de l'enfant</label>
+                                    <input id="carnet-child-name" type="text" required placeholder="Léo Martin" class="w-full text-xs p-2.5 bg-pink-50/50 border border-pink-200 rounded-lg">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Email de liaison parent</label>
+                                    <input id="carnet-parent-email" type="email" required placeholder="parent@creche.fr" class="w-full text-xs p-2.5 bg-pink-50/50 border border-pink-200 rounded-lg">
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Taille (cm)</label>
+                                        <input id="carnet-height" type="number" placeholder="85" class="w-full text-xs p-2.5 bg-pink-50/50 border border-pink-200 rounded-lg">
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Poids (kg)</label>
+                                        <input id="carnet-weight" type="number" step="0.1" placeholder="12.5" class="w-full text-xs p-2.5 bg-pink-50/50 border border-pink-200 rounded-lg">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Évolution Motrice</label>
+                                    <textarea id="carnet-motor" placeholder="Sait marcher seul, empile des blocs..." class="w-full text-xs p-2.5 bg-pink-50/50 border border-pink-200 rounded-lg h-20 resize-none"></textarea>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Évolution Cognitive & Sociale</label>
+                                    <textarea id="carnet-cognitive" placeholder="Commence à parler, partage les jouets..." class="w-full text-xs p-2.5 bg-pink-50/50 border border-pink-200 rounded-lg h-20 resize-none"></textarea>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Observations complémentaires</label>
+                                    <textarea id="carnet-observations" placeholder="Très curieux, participe activement..." class="w-full text-xs p-2.5 bg-pink-50/50 border border-pink-200 rounded-lg h-20 resize-none"></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2.5 rounded-lg text-xs transition-colors shadow-md mt-2">
+                                    Enregistrer dans le carnet
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Liste / Détails des carnets privés -->
+                        <div id="carnet-list-container" class="lg:col-span-2 bg-white p-5 rounded-2xl border border-pink-100 shadow-sm w-full">
+                            <h3 class="font-extrabold text-black text-sm mb-4 pb-2 border-b border-pink-100 text-pink-600 flex justify-between items-center">
+                                <span class="flex items-center gap-1.5"><i data-lucide="baby" class="w-4 h-4"></i> Évolution de l'enfant (Strictement privé)</span>
+                                <button id="btn-new-carnet" onclick="clearCarnetForm()" class="hidden text-[10px] bg-pink-500 hover:bg-pink-600 text-white px-2.5 py-1 rounded-full font-bold transition-colors">Nouveau carnet</button>
+                            </h3>
+                            <div id="carnet-view" class="space-y-4"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </main>
+
+            <!-- Bouton Flottant Messagerie Privée (Bas droite) -->
+            <button id="floating-chat-btn" onclick="openChat()" class="absolute bottom-6 right-6 w-14 h-14 bg-pink-500 text-white rounded-full shadow-xl flex items-center justify-center hover:bg-pink-600 hover:scale-105 transition-transform z-40">
+                <i data-lucide="message-square" class="w-7 h-7"></i>
+            </button>
+
+            <!-- Fenêtre flottante de chat privé -->
+            <div id="floating-chat-window" class="hidden absolute bottom-0 right-0 h-full max-h-[85%] md:max-h-[450px] bg-white shadow-2xl rounded-t-2xl md:rounded-2xl border border-pink-200 flex flex-col z-50 overflow-hidden w-full md:w-[350px] md:bottom-6 md:right-6">
+                
+                <!-- En-tête Chat -->
+                <div class="bg-pink-500 text-white p-3 flex justify-between items-center shadow-sm shrink-0">
+                    <span class="font-bold flex items-center gap-2 text-sm">
+                        <i data-lucide="message-square" class="w-5 h-5"></i> Discussions Privées
+                    </span>
+                    <div class="flex gap-2">
+                        <button onclick="closeChat()" class="hover:text-pink-200 p-1"><i data-lucide="chevron-down" class="w-5 h-5"></i></button>
+                        <button onclick="closeChat()" class="hover:text-pink-200 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+                    </div>
+                </div>
+
+                <!-- Liste des contacts horizontaux pour basculer facilement -->
+                <div id="chat-contacts-bar" class="flex overflow-x-auto bg-pink-50 border-b border-pink-100 p-2 gap-2 shrink-0 no-scrollbar"></div>
+
+                <!-- Zone des Messages -->
+                <div id="chat-messages-container" class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 bg-white"></div>
+
+                <!-- Formulaire Envoi Message -->
+                <form id="chat-send-form" class="p-3 border-t border-pink-100 bg-pink-50 flex gap-2 shrink-0 items-center">
+                    <input id="chat-input" type="text" required placeholder="Votre message privé..." class="flex-1 rounded-full px-4 py-2 border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm bg-white">
+                    <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white w-9 h-9 rounded-full transition-colors flex items-center justify-center shrink-0 shadow-sm">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </form>
 
             </div>
 
         </div>
+
     </div>
 
     <!-- Integration Firebase Module -->
@@ -395,20 +454,23 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
+        // Comptes pré-enregistrés par défaut
+        const DEFAULT_USERS = [
+            { id: 1, name: 'Sophie (Directrice)', role: 'Directrice', email: 'directrice@creche.fr', password: '123' },
+            { id: 2, name: 'Marie (Maîtresse)', role: 'Maîtresse', email: 'marie@creche.fr', password: '123' },
+            { id: 3, name: 'Julie (Maîtresse)', role: 'Maîtresse', email: 'julie@creche.fr', password: '123' },
+            { id: 4, name: 'Anne (Maîtresse)', role: 'Maîtresse', email: 'anne@creche.fr', password: '123' },
+            { id: 5, name: 'Maman de Léo', role: 'Parent', email: 'parent@creche.fr', password: '123' },
+        ];
+
         // --- Modèle d'État Applicatif ---
         const state = {
-            users: [
-                { id: 1, name: 'Sophie', role: 'Directrice', email: 'directrice@creche.fr', password: '123' },
-                { id: 2, name: 'Marie', role: 'Maîtresse', email: 'marie@creche.fr', password: '123' },
-                { id: 3, name: 'Julie', role: 'Maîtresse', email: 'julie@creche.fr', password: '123' },
-                { id: 4, name: 'Anne', role: 'Maîtresse', email: 'anne@creche.fr', password: '123' },
-                { id: 5, name: 'Maman de Léo', role: 'Parent', email: 'parent@creche.fr', password: '123' },
-            ],
+            users: [...DEFAULT_USERS],
             currentUser: null,
-            viewMode: 'web', // 'web' ou 'mobile'
             appState: 'landing', // 'landing', 'login', 'dashboard'
             posts: [],
             messages: [],
+            carnets: [], // Carnets d'évolution de chaque enfant (Requirement 1)
             selectedContactId: 2, // Par défaut, Marie (Maîtresse)
             isChatOpen: false,
             firebaseUser: null
@@ -431,14 +493,13 @@
         function startFirestoreSync() {
             if (!state.firebaseUser) return;
 
-            // 1. Synchronisation des publications générales (Chemin Strict Public - Rule 1)
+            // 1. Synchronisation des publications générales (Chemin Strict Public)
             const postsCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
             onSnapshot(postsCollectionPath, (snapshot) => {
                 const tempPosts = [];
                 snapshot.forEach((doc) => {
                     tempPosts.push({ id: doc.id, ...doc.data() });
                 });
-                // Tri par date / timestamp décroissant en mémoire JS (Rule 2)
                 tempPosts.sort((a, b) => b.timestamp - a.timestamp);
                 state.posts = tempPosts;
                 renderPosts();
@@ -446,19 +507,55 @@
                 console.error("Erreur de synchronisation des posts:", error);
             });
 
-            // 2. Synchronisation des messages privés (Chemin Strict Public - Rule 1)
+            // 2. Synchronisation des messages privés
             const messagesCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'private_messages');
             onSnapshot(messagesCollectionPath, (snapshot) => {
                 const tempMsgs = [];
                 snapshot.forEach((doc) => {
                     tempMsgs.push({ id: doc.id, ...doc.data() });
                 });
-                // Tri par timestamp croissant pour l'historique
                 tempMsgs.sort((a, b) => a.timestamp - b.timestamp);
                 state.messages = tempMsgs;
                 renderChatMessages();
             }, (error) => {
                 console.error("Erreur de synchronisation des messages:", error);
+            });
+
+            // 3. Synchronisation des comptes inscrits (Requirement 3)
+            const usersCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'users');
+            onSnapshot(usersCollectionPath, (snapshot) => {
+                const fbUsers = [];
+                snapshot.forEach((doc) => {
+                    fbUsers.push({ id: doc.id, ...doc.data() });
+                });
+                // On fusionne les utilisateurs enregistrés en évitant les doublons
+                const merged = [...DEFAULT_USERS];
+                fbUsers.forEach(fbu => {
+                    if (!merged.some(u => u.email.toLowerCase() === fbu.email.toLowerCase())) {
+                        merged.push(fbu);
+                    }
+                });
+                state.users = merged;
+            }, (error) => {
+                console.error("Erreur de synchronisation des utilisateurs:", error);
+            });
+
+            // 4. Synchronisation des carnets d'évolution (Requirement 1)
+            const carnetsCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'carnets');
+            onSnapshot(carnetsCollectionPath, (snapshot) => {
+                const tempCarnets = [];
+                snapshot.forEach((doc) => {
+                    tempCarnets.push({ id: doc.id, ...doc.data() });
+                });
+                tempCarnets.sort((a, b) => b.timestamp - a.timestamp);
+                state.carnets = tempCarnets;
+                
+                const carnetTab = document.getElementById('tab-carnet-content');
+                if (carnetTab && !carnetTab.classList.contains('hidden')) {
+                    renderCarnets();
+                }
+            }, (error) => {
+                console.error("Erreur de synchronisation des carnets:", error);
             });
         }
 
@@ -475,43 +572,16 @@
         // --- Abonnements Événements DOM ---
         window.addEventListener('DOMContentLoaded', () => {
             setupEventListeners();
-            syncViewMode();
             renderApp();
             lucide.createIcons();
         });
 
         function setupEventListeners() {
-            document.getElementById('btn-web').addEventListener('click', () => setViewMode('web'));
-            document.getElementById('btn-mobile').addEventListener('click', () => setViewMode('mobile'));
             document.getElementById('login-form').addEventListener('submit', handleLoginSubmit);
+            document.getElementById('register-form').addEventListener('submit', handleRegisterSubmit);
             document.getElementById('post-form').addEventListener('submit', handlePostSubmit);
             document.getElementById('chat-send-form').addEventListener('submit', handleChatSubmit);
-        }
-
-        // --- Gestion des formats de vue ---
-        function setViewMode(mode) {
-            state.viewMode = mode;
-            syncViewMode();
-        }
-
-        function syncViewMode() {
-            const viewport = document.getElementById('app-viewport');
-            const btnWeb = document.getElementById('btn-web');
-            const btnMobile = document.getElementById('btn-mobile');
-            const sidebar = document.getElementById('sidebar');
-
-            if (state.viewMode === 'mobile') {
-                viewport.className = "bg-pink-50 text-black w-full flex flex-col transition-all duration-500 relative shadow-2xl overflow-hidden max-w-[375px] h-[812px] border-[12px] border-gray-800 rounded-[2.5rem]";
-                btnMobile.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-pink-500 text-white shadow-lg";
-                btnWeb.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-gray-800 text-gray-300 hover:bg-gray-700";
-                if (sidebar) sidebar.className = "bg-white border-b border-pink-200 flex flex-col shrink-0 z-10 w-full";
-            } else {
-                viewport.className = "bg-pink-50 text-black w-full flex flex-col transition-all duration-500 relative shadow-2xl overflow-hidden max-w-7xl h-full rounded-none md:rounded-2xl border border-pink-200";
-                btnWeb.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-pink-500 text-white shadow-lg";
-                btnMobile.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-gray-800 text-gray-300 hover:bg-gray-700";
-                if (sidebar) sidebar.className = "bg-white border-r border-pink-200 flex flex-col shrink-0 z-10 w-full md:w-64";
-            }
-            renderApp();
+            document.getElementById('carnet-form').addEventListener('submit', handleCarnetSubmit);
         }
 
         // --- Navigation des Pages ---
@@ -520,10 +590,52 @@
             renderApp();
         };
 
-        window.goToLogin = function() {
+        window.goToLogin = function(isSignUp) {
             state.appState = 'login';
             document.getElementById('login-error').classList.add('hidden');
             renderApp();
+            toggleAuthMode(isSignUp);
+        };
+
+        // --- Basculer Connexion / Création de compte ---
+        window.toggleAuthMode = function(isSignUp) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const authTitle = document.getElementById('auth-title');
+            const errorDiv = document.getElementById('login-error');
+
+            errorDiv.classList.add('hidden');
+
+            if (isSignUp) {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                authTitle.innerText = "Créer un compte";
+            } else {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                authTitle.innerText = "Connexion";
+            }
+        };
+
+        // --- Gestion des onglets du Dashboard (Requirement 1) ---
+        window.switchTab = function(tabName) {
+            const newsContent = document.getElementById('tab-news-content');
+            const carnetContent = document.getElementById('tab-carnet-content');
+            const navNews = document.getElementById('nav-news');
+            const navCarnet = document.getElementById('nav-carnet');
+
+            if (tabName === 'news') {
+                newsContent.classList.remove('hidden');
+                carnetContent.classList.add('hidden');
+                navNews.className = "flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-pink-100 text-pink-700 whitespace-nowrap transition-colors";
+                navCarnet.className = "flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-gray-600 hover:bg-pink-50 hover:text-pink-600 whitespace-nowrap transition-colors";
+            } else {
+                newsContent.classList.add('hidden');
+                carnetContent.classList.remove('hidden');
+                navNews.className = "flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-gray-600 hover:bg-pink-50 hover:text-pink-600 whitespace-nowrap transition-colors";
+                navCarnet.className = "flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-pink-100 text-pink-700 whitespace-nowrap transition-colors";
+                renderCarnets();
+            }
         };
 
         // --- Moteur de Rendu d'Écrans ---
@@ -547,20 +659,69 @@
             lucide.createIcons();
         }
 
-        // --- Authentification Utilisateur Local ---
+        // --- STREAMING_CHUNK: Authentication Submit Handlers ---
+        // --- Authentification Connexion ---
         function handleLoginSubmit(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             const errorDiv = document.getElementById('login-error');
 
-            const foundUser = state.users.find(u => u.email === email && u.password === password);
+            const foundUser = state.users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
             if (foundUser) {
                 state.currentUser = foundUser;
                 state.appState = 'dashboard';
                 renderApp();
             } else {
-                errorDiv.innerText = "Identifiants de test incorrects.";
+                errorDiv.innerText = "Adresse email ou mot de passe incorrect.";
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        // --- Inscription / Création de compte (Requirement 3) ---
+        async function handleRegisterSubmit(e) {
+            e.preventDefault();
+            if (!state.firebaseUser) {
+                document.getElementById('login-error').innerText = "Attente de la liaison de sécurité...";
+                document.getElementById('login-error').classList.remove('hidden');
+                return;
+            }
+
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const role = document.getElementById('register-role').value;
+            const password = document.getElementById('register-password').value;
+            const errorDiv = document.getElementById('login-error');
+
+            const emailExists = state.users.some(u => u.email.toLowerCase() === email.toLowerCase());
+            if (emailExists) {
+                errorDiv.innerText = "Cette adresse email est déjà utilisée.";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                role,
+                password,
+                timestamp: Date.now()
+            };
+
+            try {
+                const usersCollection = collection(db, 'artifacts', appId, 'public', 'data', 'users');
+                await addDoc(usersCollection, newUser);
+
+                document.getElementById('register-form').reset();
+                toggleAuthMode(false);
+
+                state.currentUser = newUser;
+                state.appState = 'dashboard';
+                renderApp();
+            } catch (err) {
+                console.error("Erreur enregistrement de compte:", err);
+                errorDiv.innerText = "Échec lors de la création du compte.";
                 errorDiv.classList.remove('hidden');
             }
         }
@@ -577,18 +738,47 @@
         function renderDashboard() {
             if (!state.currentUser) return;
 
-            // Mise à jour de l'en-tête de profil (Desktop)
+            // En-tête de profil (Desktop)
             document.getElementById('profile-name').innerText = state.currentUser.name;
             document.getElementById('profile-role').innerText = `(${state.currentUser.role})`;
 
-            // Mise à jour de l'en-tête de profil (Mobile)
+            // En-tête de profil (Mobile)
             document.getElementById('mobile-profile-name').innerText = state.currentUser.name;
             document.getElementById('mobile-profile-role').innerText = `(${state.currentUser.role})`;
 
+            // On réinitialise l'onglet par défaut à chaque connexion
+            switchTab('news');
             renderPosts();
             renderChatContacts();
             renderChatMessages();
         }
+
+        // --- STREAMING_CHUNK: Image post selection & reader (Requirement 4) ---
+        let selectedPostImageBase64 = null;
+
+        window.triggerPostImageInput = function() {
+            document.getElementById('post-image-input').click();
+        };
+
+        window.handlePostImageSelect = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedPostImageBase64 = e.target.result;
+                    document.getElementById('image-preview-img').src = selectedPostImageBase64;
+                    document.getElementById('image-preview-container').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.clearSelectedImage = function() {
+            selectedPostImageBase64 = null;
+            document.getElementById('post-image-input').value = '';
+            document.getElementById('image-preview-container').classList.add('hidden');
+            document.getElementById('image-preview-img').src = '';
+        };
 
         // --- Rendu du Feed Général ---
         function renderPosts() {
@@ -596,6 +786,8 @@
             if (!container) return;
 
             container.innerHTML = '';
+
+            if (!state.currentUser) return;
 
             if (state.posts.length === 0) {
                 container.innerHTML = `
@@ -632,6 +824,16 @@
                     });
                 }
 
+                // Affichage d'image jointe (Requirement 4)
+                let postImageHtml = '';
+                if (post.imageUrl) {
+                    postImageHtml = `
+                        <div class="my-3 rounded-xl overflow-hidden border border-pink-100 max-h-80 bg-pink-50/10 flex justify-center">
+                            <img src="${post.imageUrl}" class="max-h-80 object-contain w-full">
+                        </div>
+                    `;
+                }
+
                 postEl.innerHTML = `
                     <div class="flex justify-between items-start mb-2">
                         <p class="font-extrabold text-black text-sm">
@@ -640,7 +842,11 @@
                         </p>
                         <span class="text-[10px] text-gray-400 font-bold">${post.time || 'À l\'instant'}</span>
                     </div>
-                    <p class="my-3 text-black text-sm leading-relaxed">${post.content}</p>
+                    
+                    <!-- Requirement 4: Taille de texte 14px et en italique -->
+                    <p class="my-3 text-black leading-relaxed italic" style="font-size: 14px;">${post.content}</p>
+                    
+                    ${postImageHtml}
                     
                     <div class="flex gap-4 mb-4 border-t border-pink-50 pt-3">
                         <button onclick="toggleLike('${post.id}')" class="text-xs flex items-center gap-1 font-bold ${hasLiked ? 'text-pink-600' : 'text-gray-400 hover:text-pink-500'}">
@@ -667,7 +873,8 @@
             lucide.createIcons();
         }
 
-        // --- Écritures Firestore pour Mur de Communication (Rule 3 Guarded) ---
+        // --- STREAMING_CHUNK: Newsfeed Firebase interactions ---
+        // --- Écritures Firestore pour Mur de Communication (Guarded) ---
         async function handlePostSubmit(e) {
             e.preventDefault();
             if (!state.firebaseUser) return;
@@ -687,10 +894,16 @@
                 timestamp: Date.now()
             };
 
+            // Ajout d'image si existante (Requirement 4)
+            if (selectedPostImageBase64) {
+                newPostObj.imageUrl = selectedPostImageBase64;
+            }
+
             try {
                 const postsCollection = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
                 await addDoc(postsCollection, newPostObj);
                 input.value = '';
+                clearSelectedImage();
             } catch (err) {
                 console.error("Erreur d'ajout de la publication:", err);
             }
@@ -770,6 +983,174 @@
             }
         };
 
+        // --- STREAMING_CHUNK: Follow-up Progress Booklets Logic (Requirement 1) ---
+        // ==========================================================
+        // SYSTEME DE CARNETS DE SUIVI PRIVÉS (Firestore / Requirement 1)
+        // ==========================================================
+        window.clearCarnetForm = function() {
+            document.getElementById('carnet-id').value = '';
+            document.getElementById('carnet-form').reset();
+            document.getElementById('carnet-form-title').innerText = "Enregistrer l'évolution";
+        };
+
+        window.editCarnet = function(id) {
+            const carnet = state.carnets.find(c => c.id === id);
+            if (!carnet) return;
+
+            document.getElementById('carnet-id').value = carnet.id;
+            document.getElementById('carnet-child-name').value = carnet.childName || '';
+            document.getElementById('carnet-parent-email').value = carnet.parentEmail || '';
+            document.getElementById('carnet-height').value = carnet.height || '';
+            document.getElementById('carnet-weight').value = carnet.weight || '';
+            document.getElementById('carnet-motor').value = carnet.motor || '';
+            document.getElementById('carnet-cognitive').value = carnet.cognitive || '';
+            document.getElementById('carnet-observations').value = carnet.observations || '';
+            document.getElementById('carnet-form-title').innerText = "Modifier l'évolution";
+        };
+
+        async function handleCarnetSubmit(e) {
+            e.preventDefault();
+            if (!state.firebaseUser) return;
+
+            const carnetId = document.getElementById('carnet-id').value;
+            const childName = document.getElementById('carnet-child-name').value.trim();
+            const parentEmail = document.getElementById('carnet-parent-email').value.trim();
+            const height = document.getElementById('carnet-height').value;
+            const weight = document.getElementById('carnet-weight').value;
+            const motor = document.getElementById('carnet-motor').value.trim();
+            const cognitive = document.getElementById('carnet-cognitive').value.trim();
+            const observations = document.getElementById('carnet-observations').value.trim();
+
+            const carnetData = {
+                childName,
+                parentEmail,
+                height: height ? parseInt(height, 10) : null,
+                weight: weight ? parseFloat(weight) : null,
+                motor,
+                cognitive,
+                observations,
+                updatedAt: new Date().toLocaleDateString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+                timestamp: Date.now()
+            };
+
+            try {
+                if (carnetId) {
+                    const carnetDoc = doc(db, 'artifacts', appId, 'public', 'data', 'carnets', carnetId);
+                    await updateDoc(carnetDoc, carnetData);
+                } else {
+                    const carnetsCollection = collection(db, 'artifacts', appId, 'public', 'data', 'carnets');
+                    await addDoc(carnetsCollection, carnetData);
+                }
+                clearCarnetForm();
+            } catch (err) {
+                console.error("Erreur enregistrement carnet:", err);
+            }
+        }
+
+        // Rendu réactif de la section d'évolution
+        function renderCarnets() {
+            const container = document.getElementById('carnet-view');
+            const formContainer = document.getElementById('carnet-form-container');
+            const btnNew = document.getElementById('btn-new-carnet');
+
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (!state.currentUser) return;
+
+            // Détection si l'utilisateur est Éducateur (Directrice / Maîtresse)
+            const isStaff = state.currentUser.role === 'Directrice' || state.currentUser.role === 'Maîtresse';
+
+            if (isStaff) {
+                formContainer.classList.remove('hidden');
+                btnNew.classList.remove('hidden');
+            } else {
+                formContainer.classList.add('hidden');
+                btnNew.classList.add('hidden');
+            }
+
+            // Filtrage d'affichage ultra-sécurisé (Requirement 1) : Les parents ne voient que leur enfant
+            let visibleCarnets = state.carnets;
+            if (!isStaff) {
+                visibleCarnets = state.carnets.filter(c => c.parentEmail?.toLowerCase() === state.currentUser.email?.toLowerCase());
+            }
+
+            if (visibleCarnets.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 text-gray-400 italic text-sm">
+                        ${isStaff ? "Aucun carnet de suivi d'enfant enregistré. Ajoutez-en un à gauche." : "Votre enfant n'a pas encore de carnet de suivi enregistré par l'équipe éducative de la crèche."}
+                    </div>
+                `;
+                return;
+            }
+
+            visibleCarnets.forEach(carnet => {
+                const card = document.createElement('div');
+                card.className = "border border-pink-100 p-4 rounded-xl bg-pink-50/20 flex flex-col gap-3 relative hover:shadow-sm transition-all";
+
+                let actionBtn = '';
+                if (isStaff) {
+                    actionBtn = `
+                        <button onclick="editCarnet('${carnet.id}')" class="absolute top-4 right-4 bg-pink-500 hover:bg-pink-600 text-white font-bold text-[10px] px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                            <i data-lucide="edit-3" class="w-3 h-3"></i> Modifier
+                        </button>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 pb-3 border-b border-pink-100">
+                        <div class="w-10 h-10 bg-pink-500 text-white rounded-full flex items-center justify-center">
+                            <i data-lucide="baby" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-black text-sm">${carnet.childName}</h4>
+                            <p class="text-[10px] text-pink-600 font-bold">Email du parent lié : ${carnet.parentEmail}</p>
+                        </div>
+                        ${actionBtn}
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                        <div class="bg-white p-2 rounded-lg border border-pink-100">
+                            <span class="block text-[10px] uppercase font-bold text-gray-400">Taille</span>
+                            <span class="font-bold text-sm text-black">${carnet.height ? carnet.height + ' cm' : '--'}</span>
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-pink-100">
+                            <span class="block text-[10px] uppercase font-bold text-gray-400">Poids</span>
+                            <span class="font-bold text-sm text-black">${carnet.weight ? carnet.weight + ' kg' : '--'}</span>
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-pink-100 col-span-2">
+                            <span class="block text-[10px] uppercase font-bold text-gray-400">Dernière mise à jour</span>
+                            <span class="font-semibold text-xs text-black">${carnet.updatedAt || 'Récemment'}</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 mt-2">
+                        <div class="bg-white p-3 rounded-lg border border-pink-100">
+                            <h5 class="font-bold text-xs text-pink-600 flex items-center gap-1.5 mb-1">
+                                <i data-lucide="star" class="w-3.5 h-3.5"></i> Développement Moteur
+                            </h5>
+                            <p class="text-xs text-gray-700 leading-relaxed">${carnet.motor || 'Aucune note sur le développement moteur pour le moment.'}</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-pink-100">
+                            <h5 class="font-bold text-xs text-pink-600 flex items-center gap-1.5 mb-1">
+                                <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Développement Social & Cognitif
+                            </h5>
+                            <p class="text-xs text-gray-700 leading-relaxed">${carnet.cognitive || 'Aucune note de sociabilisation.'}</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-pink-100">
+                            <h5 class="font-bold text-xs text-pink-600 flex items-center gap-1.5 mb-1">
+                                <i data-lucide="user" class="w-3.5 h-3.5"></i> Éducateur / Observations Générales
+                            </h5>
+                            <p class="text-xs text-gray-700 leading-relaxed italic font-medium">${carnet.observations || 'Pas d\'observation particulière.'}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // --- STREAMING_CHUNK: Floating Private Chat System ---
         // ==========================================
         // SYSTEME DE MESSAGERIE PRIVEE INTERACTIVE (Firestore)
         // ==========================================
@@ -799,6 +1180,8 @@
 
             container.innerHTML = '';
 
+            if (!state.currentUser) return;
+
             const contacts = state.users.filter(u => u.id !== state.currentUser.id);
             contacts.forEach(c => {
                 const isSelected = c.id === state.selectedContactId;
@@ -817,10 +1200,11 @@
 
             container.innerHTML = '';
 
+            if (!state.currentUser) return;
+
             const partnerId = state.selectedContactId;
             const myId = state.currentUser.id;
 
-            // Filtrage des messages pour ne garder que la conversation active entre (myId et partnerId)
             const conversation = state.messages.filter(msg => {
                 return (msg.senderId === myId && msg.receiverId === partnerId) || 
                        (msg.senderId === partnerId && msg.receiverId === myId);
